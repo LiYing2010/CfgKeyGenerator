@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.liying.CfgKeyGenerator"
+      label="CfgKey Generator"
+      version="1.0.0.qualifier"
+      provider-name="Li Ying">
+
+   <description url="https://github.com/LiYing2010/CfgKeyGenerator">
+      Source Generate tool which generate configuration key and message key constant string.
+   </description>
+
+   <copyright url="https://github.com/LiYing2010/CfgKeyGenerator">
+      Copyright (c)2016 by LiYing &lt;liying.cn.2010@gmail.com&gt;.
+All rights reserved.
+   </copyright>
+
+   <license url="https://www.eclipse.org/legal/epl-v10.html">
+      Copyright (c)2016 LiYing &lt;liying.cn.2010@gmail.com&gt;, licensed under the Eclipse Public License 1.0. &lt;https://www.eclipse.org/legal/epl-v10.html&gt;
+   </license>
+
+   <plugin
+         id="CfgKeyGenerator"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

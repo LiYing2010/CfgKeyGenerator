@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CfgKeyGenerator
+Bundle-SymbolicName: CfgKeyGenerator;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.liying.cfgKeyGenerator.plugin.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ lib/runtime/kotlin-runtime-1.0.3.jar

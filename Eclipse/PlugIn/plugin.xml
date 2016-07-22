@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="CfgKeyGenerator.contribution1"
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.xml">
+         <menu
+               icon="images/icons/cfgKey_generator.png"
+               id="CfgKeyGenerator.menu"
+               label="CfgKey Generator"
+               path="additions">
+            <separator
+                  name="generate">
+            </separator>
+         </menu>
+         <action
+               label="Generate"
+               class="net.liying.cfgKeyGenerator.plugin.popup.actions.CfgKeyGenerateAction"
+               menubarPath="CfgKeyGenerator.menu/generate"
+               id="CfgKeyGenerator.generateAction">
+         </action>
+      </objectContribution>
+   </extension>
+</plugin>
