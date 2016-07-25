@@ -21,7 +21,8 @@
                label="Generate"
                class="net.liying.cfgKeyGenerator.plugin.popup.actions.CfgKeyGenerateAction"
                menubarPath="CfgKeyGenerator.menu/generate"
-               id="CfgKeyGenerator.generateAction">
+               id="CfgKeyGenerator.generateAction"
+               enablesFor="1">
          </action>
       </objectContribution>
    </extension>
