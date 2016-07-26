@@ -3,8 +3,6 @@ package net.liying.cfgKeyGenerator.generator
 import org.apache.commons.configuration2.AbstractConfiguration
 import org.apache.commons.configuration2.builder.fluent.Configurations
 
-import org.eclipse.core.resources.IResource
-
 class CfgKeyGenerator {
 	companion object {
 		public fun generate(params: GeneratorParams) {
@@ -86,19 +84,12 @@ class CfgKeyGenerator {
 		}
 
 		private fun outputJavaSource(params: GeneratorParams, cfgKeyClassInfo: CfgKeyClassInfo) {
-			// TODO: use Eclipse workspace API to create Java source file
-
-			val srcDir = params.outputSrcDir!!.location.toFile().normalize()
-			val packageDir = srcDir.resolve(params.packageName.replace(".", "/"))
-			val sourceFile = packageDir.resolve(params.topClassName + ".java")
-
 			val javaSource = cfgKeyClassInfo.generateJavaSource()
 
-			sourceFile.parentFile.mkdirs()
-			sourceFile.writeText(javaSource, Charsets.UTF_8)
+			val outputPackage = params.outputSrcDir!!.createPackageFragment(params.packageName, true, null)
+			outputPackage.createCompilationUnit(params.topClassName + ".java", javaSource, true, null)
 
-			// refresh the source file output folder
-			params.outputSrcDir!!.refreshLocal(IResource.DEPTH_INFINITE, null)
+			// TODO: format the output source code
 		}
 	}
 }

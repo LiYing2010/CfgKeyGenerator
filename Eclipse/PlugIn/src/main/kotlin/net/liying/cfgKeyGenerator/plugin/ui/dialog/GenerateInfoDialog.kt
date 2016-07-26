@@ -87,10 +87,9 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		project.allPackageFragmentRoots.forEach { pkgFragRoot ->
 			if (pkgFragRoot.parent == project &&
 					pkgFragRoot.kind == IPackageFragmentRoot.K_SOURCE) {
-				val srcFolderResource = pkgFragRoot.resource
 				val srcFolderName = pkgFragRoot.path.makeRelativeTo(projectPath).toString()
 				this.cmbSourceFolder.add(srcFolderName)
-				this.cmbSourceFolder.setData(srcFolderName, srcFolderResource)
+				this.cmbSourceFolder.setData(srcFolderName, pkgFragRoot)
 			}
 		}
 
@@ -99,13 +98,13 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		}
 	}
 
-	private fun getSelectedSourceFolder(): IResource? {
+	private fun getSelectedSourceFolder(): IPackageFragmentRoot? {
 		val idx = this.cmbSourceFolder.getSelectionIndex()
 		if (idx < 0)
 			return null
 
 		val name = this.cmbSourceFolder.items[idx]
-		return this.cmbSourceFolder.getData(name) as IResource
+		return this.cmbSourceFolder.getData(name) as IPackageFragmentRoot
 	}
 
 	private fun checkInput(): Boolean {
