@@ -6,7 +6,7 @@ package ${cfgKeyClass.packageName};
 // CHECKSTYLE:OFF
 </#if>
 
-public <#if !cfgKeyClass.topClass>static</#if> class ${cfgKeyClass.className?cap_first} <#if cfgKeyClass.baseClassName??> extends ${cfgKeyClass.baseClassName} </#if> {
+public <#if !cfgKeyClass.topClass>static</#if> class ${cfgKeyClass.className?cap_first} <#if cfgKeyClass.baseClassName?has_content> extends ${cfgKeyClass.baseClassName} </#if> {
 <#if cfgKeyClass.allFullKeyList??>
 	public static class AllKeys {
 		public static final String[] _Array_ = {
