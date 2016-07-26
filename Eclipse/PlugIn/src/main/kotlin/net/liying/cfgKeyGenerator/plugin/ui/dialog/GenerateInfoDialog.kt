@@ -117,7 +117,7 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		this.resultParams = GeneratorParams()
 
 		this.resultParams.cfgFile = this.cfgFile!!.location.toFile().normalize()
-		this.resultParams.outputSrcDir = this.getSelectedSourceFolder()!!.location.toFile().normalize()
+		this.resultParams.outputSrcDir = this.getSelectedSourceFolder()
 		this.resultParams.packageName = this.txtPackageName.text
 		this.resultParams.topClassName = this.txtTopClassName.text
 		this.resultParams.topClassBaseClassName = this.txtBaseClassName.text
