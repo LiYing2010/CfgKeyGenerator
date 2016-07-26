@@ -3,6 +3,7 @@ package net.liying.cfgKeyGenerator.plugin.ui.dialog
 import net.liying.cfgKeyGenerator.generator.GeneratorParams
 import net.liying.cfgKeyGenerator.plugin.ui.dialog.base.BaseGenerateInfoDialog
 
+import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IWorkspaceRoot
@@ -24,6 +25,8 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		this.lblCfgFilePath.text = this.cfgFile!!.toString()
 
 		this.loadProjectList()
+
+		this.txtTopClassName.text = "Cfgkey"
 	}
 
 	private fun loadProjectList() {
@@ -37,17 +40,29 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 				this.cmbProject.add(project.name)
 				this.cmbProject.setData(project.name, javaProject)
+
+				if (this.isAncestor(this.cfgFile!!, project)) {
+					this.cmbProject.select(this.cmbProject.itemCount - 1)
+				}
 			}
 		}
 
-		if (this.cmbProject.itemCount > 0) {
+		if (this.cmbProject.selectionIndex < 0 && this.cmbProject.itemCount > 0) {
 			this.cmbProject.select(0)
-			this.loadSourceFolderList()
 		}
+
+		this.loadSourceFolderList()
+	}
+
+	private fun isAncestor(descendant: IResource, ancestor: IContainer): Boolean
+			= when (descendant.parent) {
+		null -> false
+		ancestor -> true
+		else -> this.isAncestor(descendant.parent, ancestor)
 	}
 
 	private fun getSelectedProject(): IJavaProject? {
-		val idx = this.cmbProject.getSelectionIndex()
+		val idx = this.cmbProject.selectionIndex
 		if (idx < 0)
 			return null
 
