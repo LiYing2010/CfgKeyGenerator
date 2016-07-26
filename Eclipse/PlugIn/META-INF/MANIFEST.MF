@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
+ lib/runtime/commons-beanutils-1.9.2.jar,
  lib/runtime/commons-configuration2-2.0.jar,
  lib/runtime/commons-logging-1.2.jar,
  lib/runtime/freemarker-2.3.25.jar,
