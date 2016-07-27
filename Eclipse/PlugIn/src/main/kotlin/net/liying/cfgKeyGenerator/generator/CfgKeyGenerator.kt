@@ -2,6 +2,10 @@ package net.liying.cfgKeyGenerator.generator
 
 import org.apache.commons.configuration2.AbstractConfiguration
 import org.apache.commons.configuration2.builder.fluent.Configurations
+import org.eclipse.jdt.core.ICompilationUnit
+import org.eclipse.jdt.core.ToolFactory
+import org.eclipse.jdt.core.dom.AST
+import org.eclipse.jdt.core.formatter.CodeFormatter
 
 class CfgKeyGenerator {
 	companion object {
@@ -10,7 +14,7 @@ class CfgKeyGenerator {
 
 			val topClass = this.convertToCfgKeyClass(params, keyList)
 
-			this.outputJavaSource(params, topClass)
+			this.generateJavaSource(params, topClass)
 		}
 
 		private fun readCfgKeyList(params: GeneratorParams): List<String> {
@@ -83,13 +87,30 @@ class CfgKeyGenerator {
 			return topClassInfo
 		}
 
-		private fun outputJavaSource(params: GeneratorParams, cfgKeyClassInfo: CfgKeyClassInfo) {
+		private fun generateJavaSource(params: GeneratorParams, cfgKeyClassInfo: CfgKeyClassInfo) {
 			val javaSource = cfgKeyClassInfo.generateJavaSource()
 
 			val outputPackage = params.outputSrcDir!!.createPackageFragment(params.packageName, true, null)
-			outputPackage.createCompilationUnit(params.topClassName + ".java", javaSource, true, null)
+			val compilationUnit = outputPackage.createCompilationUnit(params.topClassName + ".java", javaSource, true, null)
 
-			// TODO: format the output source code
+			this.format(compilationUnit)
+		}
+
+		private fun format(unit: ICompilationUnit) {
+			unit.becomeWorkingCopy(null)
+
+			val formatter = ToolFactory.createCodeFormatter(null)
+			val range = unit.sourceRange
+
+			val formatEdit = formatter.format(CodeFormatter.K_COMPILATION_UNIT,
+					unit.source, range.offset, range.length, 0, "\n")
+
+			if (formatEdit.hasChildren()) {
+				unit.applyTextEdit(formatEdit, null)
+				unit.reconcile(AST.JLS8, false, null, null)
+			}
+
+			unit.commitWorkingCopy(true, null)
 		}
 	}
 }
