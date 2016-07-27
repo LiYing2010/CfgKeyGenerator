@@ -15,11 +15,11 @@ class CfgKeyClassInfo(val keyPrefix: String?, val className: String) {
 
 	public val allSubKeyList = sortedSetOf<String>()
 
-	public val subKeyMap = mutableMapOf<String, String>()
+	public val subKeyMap = mutableMapOf<String, String>().toSortedMap()
 
-	public val subKeyList = mutableListOf<String>()
+	public val subKeyList = sortedSetOf<String>()
 
-	public val subClassMap = mutableMapOf<String, CfgKeyClassInfo>()
+	public val subClassMap = mutableMapOf<String, CfgKeyClassInfo>().toSortedMap()
 
 	// =========================================================================
 
