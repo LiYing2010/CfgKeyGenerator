@@ -6,8 +6,13 @@
       <objectContribution
             adaptable="true"
             id="CfgKeyGenerator.contribution1"
-            objectClass="org.eclipse.core.resources.IFile"
-            nameFilter="*.xml">
+            objectClass="org.eclipse.core.resources.IFile">
+            <visibility>
+                <or>
+                    <objectState name="name" value="*.xml"/>
+                    <objectState name="name" value="*.properties" />
+                </or>
+            </visibility>
          <menu
                icon="images/icons/cfgKey_generator.png"
                id="CfgKeyGenerator.menu"
