@@ -1,0 +1,9 @@
+(1)GenerateInfoDialog:
+set a title
+
+(2)GenerateInfoDialog:
+Configuration File not displayed correctly
+
+(3)GenerateInfoDialog:
+Save inputed value into workspace setting.
+And reload saved value at next time
