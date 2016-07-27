@@ -75,7 +75,7 @@ class CfgKeyGenerator {
 					subKeyList.forEachIndexed { idx, subKey ->
 						topClassInfo.allSubKeyList.add(subKey)
 
-						if (idx != fullKey.count() - 1) {
+						if (idx != subKeyList.size - 1) {
 							cfgKeyClassInfo = cfgKeyClassInfo.getSubClass(subKey)
 						} else {
 							cfgKeyClassInfo.addSubKey(subKey)
