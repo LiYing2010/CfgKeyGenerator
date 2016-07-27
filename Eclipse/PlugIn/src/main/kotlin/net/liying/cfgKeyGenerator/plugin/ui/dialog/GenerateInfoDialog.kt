@@ -23,7 +23,7 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 		this.loadProjectList()
 
-		this.txtTopClassName.text = "Cfgkey"
+		this.txtTopClassName.text = "CfgKey"
 
 		this.txtPackageName.setFocus()
 	}
