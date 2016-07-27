@@ -2,18 +2,15 @@ package net.liying.cfgKeyGenerator.plugin.ui.dialog
 
 import net.liying.cfgKeyGenerator.generator.GeneratorParams
 import net.liying.cfgKeyGenerator.plugin.ui.dialog.base.BaseGenerateInfoDialog
-
 import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IWorkspaceRoot
 import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.IPath
-
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.IPackageFragmentRoot
 import org.eclipse.jdt.core.JavaCore
-
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.widgets.Shell
 
@@ -27,6 +24,8 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		this.loadProjectList()
 
 		this.txtTopClassName.text = "Cfgkey"
+
+		this.txtPackageName.setFocus()
 	}
 
 	private fun loadProjectList() {
@@ -108,7 +107,18 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 	}
 
 	private fun checkInput(): Boolean {
-		// TODO
+		if (this.txtPackageName.text.trim().isEmpty()) {
+			MessageDialog.openError(this.parentShell, "Error", "Please input package name.")
+			this.txtPackageName.setFocus()
+			return false
+		}
+
+		if (this.txtTopClassName.text.trim().isEmpty()) {
+			MessageDialog.openError(this.parentShell, "Error", "Please input top class name.")
+			this.txtTopClassName.setFocus()
+			return false
+		}
+
 		return true
 	}
 
@@ -117,9 +127,9 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 		this.resultParams.cfgFile = this.cfgFile!!.location.toFile().normalize()
 		this.resultParams.outputSrcDir = this.getSelectedSourceFolder()
-		this.resultParams.packageName = this.txtPackageName.text
-		this.resultParams.topClassName = this.txtTopClassName.text
-		this.resultParams.topClassBaseClassName = this.txtBaseClassName.text
+		this.resultParams.packageName = this.txtPackageName.text.trim()
+		this.resultParams.topClassName = this.txtTopClassName.text.trim()
+		this.resultParams.topClassBaseClassName = this.txtBaseClassName.text.trim()
 	}
 
 	override fun okPressed() {
