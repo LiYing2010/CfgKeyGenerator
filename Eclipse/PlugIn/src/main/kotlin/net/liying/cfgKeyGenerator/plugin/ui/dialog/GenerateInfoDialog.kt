@@ -20,8 +20,9 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 	public fun loadInitData() {
 		this.shell.text = "Class Generation Information"
+		this.shell.layout()
 
-		this.lblCfgFilePath.text = this.cfgFile!!.toString()
+		this.lblCfgFilePath.text = this.cfgFile!!.name
 
 		this.loadProjectList()
 

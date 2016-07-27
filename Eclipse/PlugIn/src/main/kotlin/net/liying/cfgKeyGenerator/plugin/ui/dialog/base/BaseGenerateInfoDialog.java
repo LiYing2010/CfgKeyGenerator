@@ -47,13 +47,12 @@ public class BaseGenerateInfoDialog extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		GridLayout gridLayout = (GridLayout) container.getLayout();
 		gridLayout.numColumns = 2;
-		new Label(container, SWT.NONE);
-		new Label(container, SWT.NONE);
 
 		Label lblNewLabel = new Label(container, SWT.NONE);
 		lblNewLabel.setText("Configuration File:");
 
 		lblCfgFilePath = new Label(container, SWT.NONE);
+		lblCfgFilePath.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 		lblCfgFilePath.setText("FilePath");
 
 		Label lblNewLabel_2 = new Label(container, SWT.NONE);
@@ -115,6 +114,6 @@ public class BaseGenerateInfoDialog extends Dialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 320);
+		return new Point(450, 290);
 	}
 }
