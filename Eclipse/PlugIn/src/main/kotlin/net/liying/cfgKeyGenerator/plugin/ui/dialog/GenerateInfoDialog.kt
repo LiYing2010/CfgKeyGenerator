@@ -29,8 +29,6 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 		this.loadProjectList()
 
-		this.txtTopClassName.text = "CfgKey"
-
 		this.txtPackageName.setFocus()
 	}
 
@@ -136,9 +134,9 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 			return false
 		}
 
-		if (this.txtTopClassName.text.trim().isEmpty()) {
+		if (this.cmbTopClassName.text.trim().isEmpty()) {
 			MessageDialog.openError(this.parentShell, "Error", "Please input top class name.")
-			this.txtTopClassName.setFocus()
+			this.cmbTopClassName.setFocus()
 			return false
 		}
 
@@ -151,7 +149,7 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		this.resultParams.cfgFile = this.cfgFile!!.location.toFile().normalize()
 		this.resultParams.outputSrcDir = this.getSelectedSourceFolder()
 		this.resultParams.packageName = this.txtPackageName.text.trim()
-		this.resultParams.topClassName = this.txtTopClassName.text.trim().capitalize()
+		this.resultParams.topClassName = this.cmbTopClassName.text.trim().capitalize()
 		this.resultParams.topClassBaseClassName = this.txtBaseClassName.text.trim()
 	}
 

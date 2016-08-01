@@ -23,7 +23,7 @@ public class BaseGenerateInfoDialog extends Dialog {
 	protected Combo cmbSourceFolder;
 	protected Text txtPackageName;
 	private Button btnBrowsePackage;
-	protected Text txtTopClassName;
+	protected Combo cmbTopClassName;
 	protected Text txtBaseClassName;
 
 	/**
@@ -145,12 +145,14 @@ public class BaseGenerateInfoDialog extends Dialog {
 		lblNewLabel_4.setLayoutData(fd_lblNewLabel_4);
 		lblNewLabel_4.setText("Top Class Name:");
 
-		txtTopClassName = new Text(container, SWT.BORDER);
-		FormData fd_txtTopClassName = new FormData();
-		fd_txtTopClassName.right = new FormAttachment(0, 433);
-		fd_txtTopClassName.top = new FormAttachment(0, 164);
-		fd_txtTopClassName.left = new FormAttachment(0, 118);
-		txtTopClassName.setLayoutData(fd_txtTopClassName);
+		cmbTopClassName = new Combo(container, SWT.NONE);
+		cmbTopClassName.setItems(new String[] {"CfgKey", "MsgKey"});
+		FormData fd_cmbTopClassName = new FormData();
+		fd_cmbTopClassName.right = new FormAttachment(0, 433);
+		fd_cmbTopClassName.top = new FormAttachment(0, 164);
+		fd_cmbTopClassName.left = new FormAttachment(0, 118);
+		cmbTopClassName.setLayoutData(fd_cmbTopClassName);
+		cmbTopClassName.setText("CfgKey");
 
 		Label lblBaseClassName = new Label(container, SWT.NONE);
 		FormData fd_lblBaseClassName = new FormData();
