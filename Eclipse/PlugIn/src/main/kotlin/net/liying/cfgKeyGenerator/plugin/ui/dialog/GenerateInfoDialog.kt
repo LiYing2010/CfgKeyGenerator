@@ -1,12 +1,14 @@
 package net.liying.cfgKeyGenerator.plugin.ui.dialog
 
 import net.liying.cfgKeyGenerator.generator.GeneratorParams
+import net.liying.cfgKeyGenerator.plugin.Activator
 import net.liying.cfgKeyGenerator.plugin.ui.dialog.base.BaseGenerateInfoDialog
 import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IWorkspaceRoot
 import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.IPackageFragment
 import org.eclipse.jdt.core.IPackageFragmentRoot
@@ -30,6 +32,8 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		this.loadProjectList()
 
 		this.txtPackageName.setFocus()
+
+		this.loadFromConfiguration()
 	}
 
 	private fun loadProjectList() {
@@ -153,12 +157,65 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		this.resultParams.topClassBaseClassName = this.txtBaseClassName.text.trim()
 	}
 
+	private fun saveToConfiguration() {
+		val fullPath = this.cfgFile!!.fullPath.makeAbsolute().toPortableString()
+
+		val pref = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		val subPref = pref.node(fullPath)
+
+		// TODO: extract Preference keys to string const
+		subPref.put("project", this.cmbProject.text)
+		subPref.put("sourceFolder", this.cmbSourceFolder.text)
+		subPref.put("packageName", this.txtPackageName.text.trim())
+		subPref.put("topClassName", this.cmbTopClassName.text.trim().capitalize())
+		subPref.put("baseClassName", this.txtBaseClassName.text.trim())
+
+		try {
+			pref.flush()
+		} catch(e: Exception) {
+			//do nothing
+		}
+	}
+
+	private fun loadFromConfiguration() {
+		val fullPath = this.cfgFile!!.fullPath.makeAbsolute().toPortableString()
+
+		val pref = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		val subPref = pref.node(fullPath)
+
+		// TODO: extract Preference keys to string const
+		val project = subPref.get("project", null)
+		if (project != null) {
+			val idx = this.cmbProject.items.indexOf(project)
+			if (idx != -1) {
+				this.cmbProject.select(idx)
+				this.loadSourceFolderList()
+			}
+		}
+
+		val sourceFolder = subPref.get("sourceFolder", null)
+		if (sourceFolder != null) {
+			val idx = this.cmbSourceFolder.items.indexOf(sourceFolder)
+			if (idx != -1) {
+				this.cmbSourceFolder.select(idx)
+			}
+		}
+
+		this.txtPackageName.text = subPref.get("packageName", "")
+
+		this.cmbTopClassName.text = subPref.get("topClassName", "CfgKey")
+
+		this.txtBaseClassName.text = subPref.get("baseClassName", "")
+	}
+
 	override fun okPressed() {
 		if (!checkInput()) {
 			return
 		}
 
 		this.createResultParams()
+
+		this.saveToConfiguration()
 
 		super.okPressed()
 	}
