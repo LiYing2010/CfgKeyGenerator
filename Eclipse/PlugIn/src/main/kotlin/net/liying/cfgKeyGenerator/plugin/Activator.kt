@@ -10,7 +10,7 @@ import org.osgi.framework.BundleContext
 class Activator(): AbstractUIPlugin() {
 	companion object {
 		// The plug-in ID
-		const val PLUGIN_ID = "CfgKeyGenerator" //$NON-NLS-1$
+		const val PLUGIN_ID = "net.liying.CfgKeyGenerator" //$NON-NLS-1$
 
 		// The shared instance
 		private var plugin: Activator? = null

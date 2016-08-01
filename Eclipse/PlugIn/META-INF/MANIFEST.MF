@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CfgKeyGenerator
-Bundle-SymbolicName: CfgKeyGenerator;singleton:=true
+Bundle-SymbolicName: net.liying.CfgKeyGenerator;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: net.liying.cfgKeyGenerator.plugin.Activator
 Require-Bundle: org.eclipse.core.runtime,
