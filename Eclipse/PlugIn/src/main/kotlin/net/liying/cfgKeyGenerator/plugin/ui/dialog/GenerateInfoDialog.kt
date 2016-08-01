@@ -8,9 +8,12 @@ import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.IWorkspaceRoot
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.jdt.core.IJavaProject
+import org.eclipse.jdt.core.IPackageFragment
 import org.eclipse.jdt.core.IPackageFragmentRoot
 import org.eclipse.jdt.core.JavaCore
+import org.eclipse.jdt.ui.JavaUI
 import org.eclipse.jface.dialogs.MessageDialog
+import org.eclipse.jface.window.Window
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.widgets.Shell
 
@@ -107,6 +110,23 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 		val name = this.cmbSourceFolder.items[idx]
 		return this.cmbSourceFolder.getData(name) as IPackageFragmentRoot
+	}
+
+	override fun btnBrowsePackageSelected(e: SelectionEvent) {
+		val project: IJavaProject? = this.getSelectedProject()
+		if (project == null) {
+			return
+		}
+
+		val pkgSelectionDialog = JavaUI.createPackageDialog(this.shell, project, 0)
+		pkgSelectionDialog.setTitle("Package Selection")
+		pkgSelectionDialog.setMessage("Select a package.")
+		if (pkgSelectionDialog.open() == Window.OK) {
+			val pkg = pkgSelectionDialog.result[0] as IPackageFragment
+			this.txtPackageName.text = pkg.elementName
+		}
+
+		this.txtPackageName.setFocus()
 	}
 
 	private fun checkInput(): Boolean {
