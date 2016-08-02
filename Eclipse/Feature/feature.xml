@@ -19,7 +19,7 @@ All rights reserved.
    </license>
 
    <plugin
-         id="CfgKeyGenerator"
+         id="net.liying.CfgKeyGenerator"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
