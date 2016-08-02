@@ -2,6 +2,7 @@ package net.liying.cfgKeyGenerator.plugin
 
 import net.liying.cfgKeyGenerator.generator.GeneratorParams
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.ProjectScope
 import org.eclipse.core.runtime.Status
 import org.eclipse.core.runtime.preferences.InstanceScope
 import org.osgi.service.prefs.Preferences
@@ -32,8 +33,9 @@ object PreferencesManager {
 	}
 
 	public fun saveToPreferences(cfgFile: IFile, params: GeneratorParams) {
-		val fullPath = cfgFile.fullPath.makeAbsolute().toPortableString()
-		val pref = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		val projectScopeContext = ProjectScope(cfgFile.project);
+		val pref = projectScopeContext.getNode(Activator.PLUGIN_ID);
+		val fullPath = cfgFile.projectRelativePath.makeRelative().toPortableString()
 		val subPref = this.getSubPreferences(pref, fullPath)
 
 		subPref.put(Key.PROJECT, params.projectName)
@@ -51,8 +53,9 @@ object PreferencesManager {
 	}
 
 	public fun loadFromPreferences(cfgFile: IFile): GeneratorParams {
-		val fullPath = cfgFile.fullPath.makeAbsolute().toPortableString()
-		val pref = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+		val projectScopeContext = ProjectScope(cfgFile.project);
+		val pref = projectScopeContext.getNode(Activator.PLUGIN_ID);
+		val fullPath = cfgFile.projectRelativePath.makeRelative().toPortableString()
 		val subPref = this.getSubPreferences(pref, fullPath)
 
 		val params = GeneratorParams()
