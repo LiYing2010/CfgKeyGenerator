@@ -12,7 +12,9 @@ import org.eclipse.core.runtime.preferences.InstanceScope
 import org.eclipse.jdt.core.IJavaProject
 import org.eclipse.jdt.core.IPackageFragment
 import org.eclipse.jdt.core.IPackageFragmentRoot
+import org.eclipse.jdt.core.IType
 import org.eclipse.jdt.core.JavaCore
+import org.eclipse.jdt.ui.IJavaElementSearchConstants
 import org.eclipse.jdt.ui.JavaUI
 import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.window.Window
@@ -129,6 +131,26 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		}
 
 		this.txtPackageName.setFocus()
+	}
+
+	override fun btnBrowseBaseClassSelected(e: SelectionEvent) {
+		val project: IJavaProject? = this.getSelectedProject()
+		if (project == null) {
+			return
+		}
+
+		val style = IJavaElementSearchConstants.CONSIDER_CLASSES
+		val clsSelectionDialog = JavaUI.createTypeDialog(this.shell, null,
+				project.project, style, false)
+		clsSelectionDialog.setTitle("Base Class Selection")
+		clsSelectionDialog.setMessage("Select a base class.")
+
+		if (clsSelectionDialog.open() == Window.OK) {
+			val baseClass = clsSelectionDialog.result[0] as IType
+			this.txtBaseClassName.text = baseClass.getFullyQualifiedName('.')
+		}
+
+		this.txtBaseClassName.setFocus()
 	}
 
 	private fun checkInput(): Boolean {

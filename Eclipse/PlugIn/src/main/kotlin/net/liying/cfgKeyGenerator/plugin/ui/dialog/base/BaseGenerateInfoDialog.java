@@ -22,9 +22,10 @@ public class BaseGenerateInfoDialog extends Dialog {
 	protected Combo cmbProject;
 	protected Combo cmbSourceFolder;
 	protected Text txtPackageName;
-	private Button btnBrowsePackage;
+	protected Button btnBrowsePackage;
 	protected Combo cmbTopClassName;
 	protected Text txtBaseClassName;
+	protected Button btnBrowseBaseClass;
 
 	/**
 	 * Create the dialog.
@@ -41,6 +42,10 @@ public class BaseGenerateInfoDialog extends Dialog {
 	}
 
 	protected void btnBrowsePackageSelected(final SelectionEvent e) {
+		// do nothing here, implemented in sub-class
+	}
+
+	protected void btnBrowseBaseClassSelected(final SelectionEvent e) {
 		// do nothing here, implemented in sub-class
 	}
 
@@ -146,7 +151,7 @@ public class BaseGenerateInfoDialog extends Dialog {
 		lblNewLabel_4.setText("Top Class Name:");
 
 		cmbTopClassName = new Combo(container, SWT.NONE);
-		cmbTopClassName.setItems(new String[] {"CfgKey", "MsgKey"});
+		cmbTopClassName.setItems(new String[] { "CfgKey", "MsgKey" });
 		FormData fd_cmbTopClassName = new FormData();
 		fd_cmbTopClassName.right = new FormAttachment(0, 433);
 		fd_cmbTopClassName.top = new FormAttachment(0, 164);
@@ -163,10 +168,23 @@ public class BaseGenerateInfoDialog extends Dialog {
 
 		txtBaseClassName = new Text(container, SWT.BORDER);
 		FormData fd_txtBaseClassName = new FormData();
-		fd_txtBaseClassName.right = new FormAttachment(0, 433);
+		fd_txtBaseClassName.right = new FormAttachment(0, 365);
 		fd_txtBaseClassName.top = new FormAttachment(0, 193);
 		fd_txtBaseClassName.left = new FormAttachment(0, 118);
 		txtBaseClassName.setLayoutData(fd_txtBaseClassName);
+
+		btnBrowseBaseClass = new Button(container, SWT.NONE);
+		btnBrowseBaseClass.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				BaseGenerateInfoDialog.this.btnBrowseBaseClassSelected(e);
+			}
+		});
+		btnBrowseBaseClass.setText("Browse...");
+		FormData fd_btnBrowseBaseClass = new FormData();
+		fd_btnBrowseBaseClass.top = new FormAttachment(0, 191);
+		fd_btnBrowseBaseClass.left = new FormAttachment(0, 370);
+		btnBrowseBaseClass.setLayoutData(fd_btnBrowseBaseClass);
 
 		return container;
 	}
