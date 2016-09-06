@@ -68,9 +68,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 
 		lblCfgFilePath = new Label(container, SWT.NONE);
 		FormData fd_lblCfgFilePath = new FormData();
-		fd_lblCfgFilePath.right = new FormAttachment(0, 433);
+		fd_lblCfgFilePath.right = new FormAttachment(0, 453);
 		fd_lblCfgFilePath.top = new FormAttachment(0, 13);
-		fd_lblCfgFilePath.left = new FormAttachment(0, 114);
+		fd_lblCfgFilePath.left = new FormAttachment(0, 138);
 		lblCfgFilePath.setLayoutData(fd_lblCfgFilePath);
 		lblCfgFilePath.setText("FilePath");
 
@@ -90,9 +90,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 
 		cmbProject = new Combo(container, SWT.READ_ONLY);
 		FormData fd_cmbProject = new FormData();
-		fd_cmbProject.right = new FormAttachment(0, 433);
+		fd_cmbProject.right = new FormAttachment(0, 453);
 		fd_cmbProject.top = new FormAttachment(0, 59);
-		fd_cmbProject.left = new FormAttachment(0, 118);
+		fd_cmbProject.left = new FormAttachment(0, 138);
 		cmbProject.setLayoutData(fd_cmbProject);
 		cmbProject.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -110,9 +110,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 
 		cmbSourceFolder = new Combo(container, SWT.READ_ONLY);
 		FormData fd_cmbSourceFolder = new FormData();
-		fd_cmbSourceFolder.right = new FormAttachment(0, 433);
+		fd_cmbSourceFolder.right = new FormAttachment(0, 453);
 		fd_cmbSourceFolder.top = new FormAttachment(0, 90);
-		fd_cmbSourceFolder.left = new FormAttachment(0, 118);
+		fd_cmbSourceFolder.left = new FormAttachment(0, 138);
 		cmbSourceFolder.setLayoutData(fd_cmbSourceFolder);
 
 		Label lblNewLabel_3 = new Label(container, SWT.NONE);
@@ -124,9 +124,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 
 		txtPackageName = new Text(container, SWT.BORDER);
 		FormData fd_txtPackageName = new FormData();
-		fd_txtPackageName.right = new FormAttachment(0, 365);
+		fd_txtPackageName.right = new FormAttachment(0, 385);
 		fd_txtPackageName.top = new FormAttachment(0, 127);
-		fd_txtPackageName.left = new FormAttachment(0, 118);
+		fd_txtPackageName.left = new FormAttachment(0, 138);
 		txtPackageName.setLayoutData(fd_txtPackageName);
 
 		btnBrowsePackage = new Button(container, SWT.NONE);
@@ -137,8 +137,8 @@ public class BaseGenerateInfoDialog extends Dialog {
 			}
 		});
 		FormData fd_btnBrowsePackage = new FormData();
-		fd_btnBrowsePackage.right = new FormAttachment(0, 433);
-		fd_btnBrowsePackage.left = new FormAttachment(0, 370);
+		fd_btnBrowsePackage.right = new FormAttachment(0, 453);
+		fd_btnBrowsePackage.left = new FormAttachment(0, 390);
 		fd_btnBrowsePackage.top = new FormAttachment(0, 125);
 		btnBrowsePackage.setLayoutData(fd_btnBrowsePackage);
 		btnBrowsePackage.setText("Browse...");
@@ -153,9 +153,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 		cmbTopClassName = new Combo(container, SWT.NONE);
 		cmbTopClassName.setItems(new String[] { "CfgKey", "MsgKey" });
 		FormData fd_cmbTopClassName = new FormData();
-		fd_cmbTopClassName.right = new FormAttachment(0, 433);
+		fd_cmbTopClassName.right = new FormAttachment(0, 453);
 		fd_cmbTopClassName.top = new FormAttachment(0, 164);
-		fd_cmbTopClassName.left = new FormAttachment(0, 118);
+		fd_cmbTopClassName.left = new FormAttachment(0, 138);
 		cmbTopClassName.setLayoutData(fd_cmbTopClassName);
 		cmbTopClassName.setText("CfgKey");
 
@@ -168,9 +168,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 
 		txtBaseClassName = new Text(container, SWT.BORDER);
 		FormData fd_txtBaseClassName = new FormData();
-		fd_txtBaseClassName.right = new FormAttachment(0, 365);
+		fd_txtBaseClassName.right = new FormAttachment(0, 385);
 		fd_txtBaseClassName.top = new FormAttachment(0, 193);
-		fd_txtBaseClassName.left = new FormAttachment(0, 118);
+		fd_txtBaseClassName.left = new FormAttachment(0, 138);
 		txtBaseClassName.setLayoutData(fd_txtBaseClassName);
 
 		btnBrowseBaseClass = new Button(container, SWT.NONE);
@@ -182,8 +182,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 		});
 		btnBrowseBaseClass.setText("Browse...");
 		FormData fd_btnBrowseBaseClass = new FormData();
+		fd_btnBrowseBaseClass.right = new FormAttachment(0, 453);
 		fd_btnBrowseBaseClass.top = new FormAttachment(0, 191);
-		fd_btnBrowseBaseClass.left = new FormAttachment(0, 370);
+		fd_btnBrowseBaseClass.left = new FormAttachment(0, 390);
 		btnBrowseBaseClass.setLayoutData(fd_btnBrowseBaseClass);
 
 		return container;
@@ -205,6 +206,6 @@ public class BaseGenerateInfoDialog extends Dialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(450, 311);
+		return new Point(480, 310);
 	}
 }
