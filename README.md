@@ -4,7 +4,7 @@ So, in your application source, you can use the generated configuration key cons
 
 Current version
 ===========
-v1.0.0 released at 2016/08/02
+v1.1.0 released at 2016/09/07
 
 
 Install
