@@ -1,6 +1,7 @@
 package net.liying.cfgKeyGenerator.plugin.ui.dialog
 
 import net.liying.cfgKeyGenerator.generator.GeneratorParams
+import net.liying.cfgKeyGenerator.generator.GeneratorParams.SourceType
 import net.liying.cfgKeyGenerator.plugin.PreferencesManager
 import net.liying.cfgKeyGenerator.plugin.ui.dialog.base.BaseGenerateInfoDialog
 import org.eclipse.core.resources.IContainer
@@ -32,10 +33,26 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 		this.loadProjectList()
 
+		this.loadSourceType()
+
 		this.txtPackageName.setFocus()
 
 		this.loadFromConfiguration()
 	}
+
+	private fun loadSourceType() {
+		this.cmbSourceType.removeAll()
+
+		SourceType.values().forEach { sourceType ->
+			this.cmbSourceType.add(sourceType.name)
+			this.cmbSourceType.setData(sourceType.name, sourceType)
+		}
+
+		this.cmbSourceType.select(0)
+	}
+
+	private val selectedSourceType: SourceType
+		get() = this.cmbSourceType.getData(this.cmbSourceType.text) as SourceType
 
 	private fun loadProjectList() {
 		this.cmbProject.removeAll()
@@ -62,21 +79,22 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		this.loadSourceFolderList()
 	}
 
-	private fun isAncestor(descendant: IResource, ancestor: IContainer): Boolean
-			= when (descendant.parent) {
-		null -> false
-		ancestor -> true
-		else -> this.isAncestor(descendant.parent, ancestor)
-	}
+	private fun isAncestor(descendant: IResource, ancestor: IContainer): Boolean =
+			when (descendant.parent) {
+				null -> false
+				ancestor -> true
+				else -> this.isAncestor(descendant.parent, ancestor)
+			}
 
-	private fun getSelectedProject(): IJavaProject? {
-		val idx = this.cmbProject.selectionIndex
-		if (idx < 0)
-			return null
+	private val selectedProject: IJavaProject?
+		get() {
+			val idx = this.cmbProject.selectionIndex
+			if (idx < 0)
+				return null
 
-		val name = this.cmbProject.items[idx]
-		return this.cmbProject.getData(name) as IJavaProject
-	}
+			val name = this.cmbProject.items[idx]
+			return this.cmbProject.getData(name) as IJavaProject
+		}
 
 	override fun cmbProjectSelected(e: SelectionEvent) {
 		this.loadSourceFolderList()
@@ -85,7 +103,7 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 	private fun loadSourceFolderList() {
 		this.cmbSourceFolder.removeAll()
 
-		val project: IJavaProject? = this.getSelectedProject()
+		val project: IJavaProject? = this.selectedProject
 		if (project == null) {
 			return
 		}
@@ -106,17 +124,18 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		}
 	}
 
-	private fun getSelectedSourceFolder(): IPackageFragmentRoot? {
-		val idx = this.cmbSourceFolder.getSelectionIndex()
-		if (idx < 0)
-			return null
+	private val selectedSourceFolder: IPackageFragmentRoot?
+		get() {
+			val idx = this.cmbSourceFolder.selectionIndex
+			if (idx < 0)
+				return null
 
-		val name = this.cmbSourceFolder.items[idx]
-		return this.cmbSourceFolder.getData(name) as IPackageFragmentRoot
-	}
+			val name = this.cmbSourceFolder.items[idx]
+			return this.cmbSourceFolder.getData(name) as IPackageFragmentRoot
+		}
 
 	override fun btnBrowsePackageSelected(e: SelectionEvent) {
-		val project: IJavaProject? = this.getSelectedProject()
+		val project: IJavaProject? = this.selectedProject
 		if (project == null) {
 			return
 		}
@@ -133,7 +152,7 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 	}
 
 	override fun btnBrowseBaseClassSelected(e: SelectionEvent) {
-		val project: IJavaProject? = this.getSelectedProject()
+		val project: IJavaProject? = this.selectedProject
 		if (project == null) {
 			return
 		}
@@ -173,8 +192,9 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 
 		this.resultParams.cfgFile = this.cfgFile!!.location.toFile().normalize()
 		this.resultParams.projectName = this.cmbProject.text
-		this.resultParams.outputSrcDir = this.getSelectedSourceFolder()
+		this.resultParams.outputSrcDir = this.selectedSourceFolder
 		this.resultParams.outputSrcDirName = this.cmbSourceFolder.text
+		this.resultParams.sourceType = this.selectedSourceType
 		this.resultParams.packageName = this.txtPackageName.text.trim()
 		this.resultParams.topClassName = this.cmbTopClassName.text.trim().capitalize()
 		this.resultParams.topClassBaseClassName = this.txtBaseClassName.text.trim()
@@ -191,10 +211,13 @@ class GenerateInfoDialog(parentShell: Shell?) : BaseGenerateInfoDialog(parentShe
 		}
 
 		val sourceFolderName = params.outputSrcDirName
-		idx = this.cmbSourceFolder.items.indexOf(sourceFolderName)
+		idx = this.cmbSourceFolder.indexOf(sourceFolderName)
 		if (idx != -1) {
 			this.cmbSourceFolder.select(idx)
 		}
+
+		idx = this.cmbSourceType.indexOf(params.sourceType.name)
+		this.cmbSourceType.select(idx)
 
 		this.txtPackageName.text = params.packageName
 		this.cmbTopClassName.text = params.topClassName

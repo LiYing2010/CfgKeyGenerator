@@ -1,8 +1,8 @@
 package net.liying.cfgKeyGenerator.generator
 
-import java.io.StringWriter
-
 import freemarker.template.Configuration
+import net.liying.cfgKeyGenerator.generator.GeneratorParams.SourceType
+import java.io.StringWriter
 
 class CfgKeyClassInfo(val keyPrefix: String?, val className: String) {
 	public var topClass: Boolean = false
@@ -56,13 +56,16 @@ class CfgKeyClassInfo(val keyPrefix: String?, val className: String) {
 
 	// =========================================================================
 
-
-	public fun generateJavaSource(): String {
+	private fun generateSource(sourceType: SourceType): String {
 		val cfg = Configuration(Configuration.VERSION_2_3_25)
 
 		cfg.setClassForTemplateLoading(CfgKeyClassInfo::class.java, "")
 
-		val template = cfg.getTemplate("template/CfgKeyClass.ftl", "UTF-8")
+		val templateName = when (sourceType) {
+			SourceType.Kotlin -> "CfgKeyClass_Kotlin.ftl"
+			SourceType.Java -> "CfgKeyClass_Java.ftl"
+		}
+		val template = cfg.getTemplate("template/${templateName}", "UTF-8")
 
 		val writer = StringWriter()
 
@@ -73,4 +76,8 @@ class CfgKeyClassInfo(val keyPrefix: String?, val className: String) {
 
 		return writer.toString()
 	}
+
+	public fun generateKotlinSource() = this.generateSource(SourceType.Kotlin)
+
+	public fun generateJavaSource() = this.generateSource(SourceType.Java)
 }

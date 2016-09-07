@@ -21,6 +21,7 @@ public class BaseGenerateInfoDialog extends Dialog {
 	protected Label lblCfgFilePath;
 	protected Combo cmbProject;
 	protected Combo cmbSourceFolder;
+	protected Combo cmbSourceType;
 	protected Text txtPackageName;
 	protected Button btnBrowsePackage;
 	protected Combo cmbTopClassName;
@@ -59,40 +60,40 @@ public class BaseGenerateInfoDialog extends Dialog {
 		Composite container = (Composite) super.createDialogArea(parent);
 		container.setLayout(new FormLayout());
 
-		Label lblNewLabel = new Label(container, SWT.NONE);
-		FormData fd_lblNewLabel = new FormData();
-		fd_lblNewLabel.top = new FormAttachment(0, 13);
-		fd_lblNewLabel.left = new FormAttachment(0, 11);
-		lblNewLabel.setLayoutData(fd_lblNewLabel);
-		lblNewLabel.setText("Configuration File:");
+		Label lblCfgFilePathTitle = new Label(container, SWT.NONE);
+		FormData fd_lblCfgFilePathTitle = new FormData();
+		fd_lblCfgFilePathTitle.top = new FormAttachment(0, 13);
+		fd_lblCfgFilePathTitle.left = new FormAttachment(0, 11);
+		lblCfgFilePathTitle.setLayoutData(fd_lblCfgFilePathTitle);
+		lblCfgFilePathTitle.setText("Configuration File:");
 
 		lblCfgFilePath = new Label(container, SWT.NONE);
 		FormData fd_lblCfgFilePath = new FormData();
-		fd_lblCfgFilePath.right = new FormAttachment(0, 453);
-		fd_lblCfgFilePath.top = new FormAttachment(0, 13);
-		fd_lblCfgFilePath.left = new FormAttachment(0, 138);
+		fd_lblCfgFilePath.left = new FormAttachment(lblCfgFilePathTitle, 130, SWT.LEFT);
+		fd_lblCfgFilePath.right = new FormAttachment(lblCfgFilePathTitle, 450, SWT.LEFT);
+		fd_lblCfgFilePath.top = new FormAttachment(lblCfgFilePathTitle, 0, SWT.CENTER);
 		lblCfgFilePath.setLayoutData(fd_lblCfgFilePath);
 		lblCfgFilePath.setText("FilePath");
 
-		Label lblNewLabel_2 = new Label(container, SWT.NONE);
-		FormData fd_lblNewLabel_2 = new FormData();
-		fd_lblNewLabel_2.top = new FormAttachment(0, 36);
-		fd_lblNewLabel_2.left = new FormAttachment(0, 11);
-		lblNewLabel_2.setLayoutData(fd_lblNewLabel_2);
-		lblNewLabel_2.setText("Destination:");
+		Label lblDestination = new Label(container, SWT.NONE);
+		FormData fd_lblDestination = new FormData();
+		fd_lblDestination.top = new FormAttachment(lblCfgFilePathTitle, 24, SWT.TOP);
+		fd_lblDestination.left = new FormAttachment(lblCfgFilePathTitle, 0, SWT.LEFT);
+		lblDestination.setLayoutData(fd_lblDestination);
+		lblDestination.setText("Destination:");
 
 		Label lblProject = new Label(container, SWT.NONE);
 		FormData fd_lblProject = new FormData();
-		fd_lblProject.top = new FormAttachment(0, 63);
-		fd_lblProject.left = new FormAttachment(0, 21);
+		fd_lblProject.top = new FormAttachment(lblDestination, 24, SWT.TOP);
+		fd_lblProject.left = new FormAttachment(lblDestination, 16, SWT.LEFT);
 		lblProject.setLayoutData(fd_lblProject);
 		lblProject.setText("Project:");
 
 		cmbProject = new Combo(container, SWT.READ_ONLY);
 		FormData fd_cmbProject = new FormData();
-		fd_cmbProject.right = new FormAttachment(0, 453);
-		fd_cmbProject.top = new FormAttachment(0, 59);
-		fd_cmbProject.left = new FormAttachment(0, 138);
+		fd_cmbProject.left = new FormAttachment(lblCfgFilePath, 0, SWT.LEFT);
+		fd_cmbProject.right = new FormAttachment(lblCfgFilePath, 0, SWT.RIGHT);
+		fd_cmbProject.top = new FormAttachment(lblProject, 0, SWT.CENTER);
 		cmbProject.setLayoutData(fd_cmbProject);
 		cmbProject.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -101,32 +102,46 @@ public class BaseGenerateInfoDialog extends Dialog {
 			}
 		});
 
-		Label lblNewLabel_1 = new Label(container, SWT.NONE);
-		FormData fd_lblNewLabel_1 = new FormData();
-		fd_lblNewLabel_1.top = new FormAttachment(0, 94);
-		fd_lblNewLabel_1.left = new FormAttachment(0, 21);
-		lblNewLabel_1.setLayoutData(fd_lblNewLabel_1);
-		lblNewLabel_1.setText("Source Folder:");
+		Label lblSourceFolder = new Label(container, SWT.NONE);
+		FormData fd_lblSourceFolder = new FormData();
+		fd_lblSourceFolder.top = new FormAttachment(lblProject, 32, SWT.TOP);
+		fd_lblSourceFolder.left = new FormAttachment(lblProject, 0, SWT.LEFT);
+		lblSourceFolder.setLayoutData(fd_lblSourceFolder);
+		lblSourceFolder.setText("Source Folder:");
 
 		cmbSourceFolder = new Combo(container, SWT.READ_ONLY);
 		FormData fd_cmbSourceFolder = new FormData();
-		fd_cmbSourceFolder.right = new FormAttachment(0, 453);
-		fd_cmbSourceFolder.top = new FormAttachment(0, 90);
-		fd_cmbSourceFolder.left = new FormAttachment(0, 138);
+		fd_cmbSourceFolder.left = new FormAttachment(lblCfgFilePath, 0, SWT.LEFT);
+		fd_cmbSourceFolder.right = new FormAttachment(lblCfgFilePath, 0, SWT.RIGHT);
+		fd_cmbSourceFolder.top = new FormAttachment(lblSourceFolder, 0, SWT.CENTER);
 		cmbSourceFolder.setLayoutData(fd_cmbSourceFolder);
 
-		Label lblNewLabel_3 = new Label(container, SWT.NONE);
-		FormData fd_lblNewLabel_3 = new FormData();
-		fd_lblNewLabel_3.top = new FormAttachment(0, 131);
-		fd_lblNewLabel_3.left = new FormAttachment(0, 21);
-		lblNewLabel_3.setLayoutData(fd_lblNewLabel_3);
-		lblNewLabel_3.setText("Package Name:");
+		Label lblSourceType = new Label(container, SWT.NONE);
+		lblSourceType.setText("Source Type:");
+		FormData fd_lblSourceType = new FormData();
+		fd_lblSourceType.left = new FormAttachment(lblProject, 0, SWT.LEFT);
+		fd_lblSourceType.top = new FormAttachment(lblSourceFolder, 32, SWT.TOP);
+		lblSourceType.setLayoutData(fd_lblSourceType);
+
+		cmbSourceType = new Combo(container, SWT.READ_ONLY);
+		FormData fd_cmbSourceType = new FormData();
+		fd_cmbSourceType.right = new FormAttachment(lblCfgFilePath, 0, SWT.RIGHT);
+		fd_cmbSourceType.top = new FormAttachment(lblSourceType, 0, SWT.CENTER);
+		fd_cmbSourceType.left = new FormAttachment(lblCfgFilePath, 0, SWT.LEFT);
+		cmbSourceType.setLayoutData(fd_cmbSourceType);
+
+		Label lblPackageName = new Label(container, SWT.NONE);
+		FormData fd_lblPackageName = new FormData();
+		fd_lblPackageName.left = new FormAttachment(lblProject, 0, SWT.LEFT);
+		fd_lblPackageName.top = new FormAttachment(lblSourceType, 32, SWT.TOP);
+		lblPackageName.setLayoutData(fd_lblPackageName);
+		lblPackageName.setText("Package Name:");
 
 		txtPackageName = new Text(container, SWT.BORDER);
 		FormData fd_txtPackageName = new FormData();
-		fd_txtPackageName.right = new FormAttachment(0, 385);
-		fd_txtPackageName.top = new FormAttachment(0, 127);
-		fd_txtPackageName.left = new FormAttachment(0, 138);
+		fd_txtPackageName.right = new FormAttachment(lblCfgFilePath, -76, SWT.RIGHT);
+		fd_txtPackageName.top = new FormAttachment(lblPackageName, 0, SWT.CENTER);
+		fd_txtPackageName.left = new FormAttachment(lblCfgFilePath, 0, SWT.LEFT);
 		txtPackageName.setLayoutData(fd_txtPackageName);
 
 		btnBrowsePackage = new Button(container, SWT.NONE);
@@ -137,40 +152,40 @@ public class BaseGenerateInfoDialog extends Dialog {
 			}
 		});
 		FormData fd_btnBrowsePackage = new FormData();
-		fd_btnBrowsePackage.right = new FormAttachment(0, 453);
-		fd_btnBrowsePackage.left = new FormAttachment(0, 390);
-		fd_btnBrowsePackage.top = new FormAttachment(0, 125);
+		fd_btnBrowsePackage.right = new FormAttachment(lblCfgFilePath, 0, SWT.RIGHT);
+		fd_btnBrowsePackage.left = new FormAttachment(lblCfgFilePath, -72, SWT.RIGHT);
+		fd_btnBrowsePackage.top = new FormAttachment(lblPackageName, 0, SWT.CENTER);
 		btnBrowsePackage.setLayoutData(fd_btnBrowsePackage);
 		btnBrowsePackage.setText("Browse...");
 
-		Label lblNewLabel_4 = new Label(container, SWT.NONE);
-		FormData fd_lblNewLabel_4 = new FormData();
-		fd_lblNewLabel_4.top = new FormAttachment(0, 167);
-		fd_lblNewLabel_4.left = new FormAttachment(0, 21);
-		lblNewLabel_4.setLayoutData(fd_lblNewLabel_4);
-		lblNewLabel_4.setText("Top Class Name:");
+		Label lblTopClassName = new Label(container, SWT.NONE);
+		FormData fd_lblTopClassName = new FormData();
+		fd_lblTopClassName.left = new FormAttachment(lblProject, 0, SWT.LEFT);
+		fd_lblTopClassName.top = new FormAttachment(lblPackageName, 32, SWT.TOP);
+		lblTopClassName.setLayoutData(fd_lblTopClassName);
+		lblTopClassName.setText("Top Class Name:");
 
 		cmbTopClassName = new Combo(container, SWT.NONE);
 		cmbTopClassName.setItems(new String[] { "CfgKey", "MsgKey" });
 		FormData fd_cmbTopClassName = new FormData();
-		fd_cmbTopClassName.right = new FormAttachment(0, 453);
-		fd_cmbTopClassName.top = new FormAttachment(0, 164);
-		fd_cmbTopClassName.left = new FormAttachment(0, 138);
+		fd_cmbTopClassName.right = new FormAttachment(lblCfgFilePath, 0, SWT.RIGHT);
+		fd_cmbTopClassName.top = new FormAttachment(lblTopClassName, 0, SWT.CENTER);
+		fd_cmbTopClassName.left = new FormAttachment(lblCfgFilePath, 0, SWT.LEFT);
 		cmbTopClassName.setLayoutData(fd_cmbTopClassName);
 		cmbTopClassName.setText("CfgKey");
 
 		Label lblBaseClassName = new Label(container, SWT.NONE);
 		FormData fd_lblBaseClassName = new FormData();
-		fd_lblBaseClassName.top = new FormAttachment(0, 196);
-		fd_lblBaseClassName.left = new FormAttachment(0, 21);
+		fd_lblBaseClassName.left = new FormAttachment(lblProject, 0, SWT.LEFT);
+		fd_lblBaseClassName.top = new FormAttachment(lblTopClassName, 32, SWT.TOP);
 		lblBaseClassName.setLayoutData(fd_lblBaseClassName);
 		lblBaseClassName.setText("Base Class Name:");
 
 		txtBaseClassName = new Text(container, SWT.BORDER);
 		FormData fd_txtBaseClassName = new FormData();
-		fd_txtBaseClassName.right = new FormAttachment(0, 385);
-		fd_txtBaseClassName.top = new FormAttachment(0, 193);
-		fd_txtBaseClassName.left = new FormAttachment(0, 138);
+		fd_txtBaseClassName.right = new FormAttachment(lblCfgFilePath, -76, SWT.RIGHT);
+		fd_txtBaseClassName.top = new FormAttachment(lblBaseClassName, 0, SWT.CENTER);
+		fd_txtBaseClassName.left = new FormAttachment(lblCfgFilePath, 0, SWT.LEFT);
 		txtBaseClassName.setLayoutData(fd_txtBaseClassName);
 
 		btnBrowseBaseClass = new Button(container, SWT.NONE);
@@ -182,9 +197,9 @@ public class BaseGenerateInfoDialog extends Dialog {
 		});
 		btnBrowseBaseClass.setText("Browse...");
 		FormData fd_btnBrowseBaseClass = new FormData();
-		fd_btnBrowseBaseClass.right = new FormAttachment(0, 453);
-		fd_btnBrowseBaseClass.top = new FormAttachment(0, 191);
-		fd_btnBrowseBaseClass.left = new FormAttachment(0, 390);
+		fd_btnBrowseBaseClass.right = new FormAttachment(lblCfgFilePath, 0, SWT.RIGHT);
+		fd_btnBrowseBaseClass.left = new FormAttachment(lblCfgFilePath, -72, SWT.RIGHT);
+		fd_btnBrowseBaseClass.top = new FormAttachment(lblBaseClassName, 0, SWT.CENTER);
 		btnBrowseBaseClass.setLayoutData(fd_btnBrowseBaseClass);
 
 		return container;
@@ -206,6 +221,6 @@ public class BaseGenerateInfoDialog extends Dialog {
 	 */
 	@Override
 	protected Point getInitialSize() {
-		return new Point(480, 310);
+		return new Point(490, 340);
 	}
 }

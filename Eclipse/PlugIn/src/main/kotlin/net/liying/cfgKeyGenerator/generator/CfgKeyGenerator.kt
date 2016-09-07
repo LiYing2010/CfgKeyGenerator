@@ -1,8 +1,11 @@
 package net.liying.cfgKeyGenerator.generator
 
+import net.liying.cfgKeyGenerator.generator.GeneratorParams.SourceType
 import org.apache.commons.configuration2.AbstractConfiguration
 import org.apache.commons.configuration2.builder.fluent.Configurations
+import org.eclipse.core.resources.IFolder
 import org.eclipse.jdt.core.ICompilationUnit
+import org.eclipse.jdt.core.IPackageFragment
 import org.eclipse.jdt.core.ToolFactory
 import org.eclipse.jdt.core.dom.AST
 import org.eclipse.jdt.core.formatter.CodeFormatter
@@ -14,7 +17,7 @@ class CfgKeyGenerator {
 
 			val topClass = this.convertToCfgKeyClass(params, keyList)
 
-			this.generateJavaSource(params, topClass)
+			this.generateSource(params, topClass)
 		}
 
 		private fun readCfgKeyList(params: GeneratorParams): List<String> {
@@ -87,11 +90,38 @@ class CfgKeyGenerator {
 			return topClassInfo
 		}
 
-		private fun generateJavaSource(params: GeneratorParams, cfgKeyClassInfo: CfgKeyClassInfo) {
-			val javaSource = cfgKeyClassInfo.generateJavaSource()
+		private fun generateSource(params: GeneratorParams, cfgKeyClassInfo: CfgKeyClassInfo) {
+			val sourceContent =
+					when (params.sourceType) {
+						SourceType.Kotlin -> cfgKeyClassInfo.generateKotlinSource()
+						SourceType.Java -> cfgKeyClassInfo.generateJavaSource()
+					}
+
+			val fileExt =
+					when (params.sourceType) {
+						SourceType.Kotlin -> "kt"
+						SourceType.Java -> "java"
+					}
+			val fileName = "${params.topClassName}.${fileExt}"
 
 			val outputPackage = params.outputSrcDir!!.createPackageFragment(params.packageName, true, null)
-			val compilationUnit = outputPackage.createCompilationUnit(params.topClassName + ".java", javaSource, true, null)
+
+			when (params.sourceType) {
+				SourceType.Kotlin -> this.generateKotlinSource(outputPackage, fileName, sourceContent)
+				SourceType.Java -> this.generateJavaSource(outputPackage, fileName, sourceContent)
+			}
+		}
+
+		private fun generateKotlinSource(outputPackage: IPackageFragment, fileName: String, sourceContent: String) {
+			val folder = outputPackage.correspondingResource as IFolder
+
+			val sourceFile = folder.getFile(fileName)
+			val inputStream = sourceContent.toByteArray().inputStream()
+			sourceFile.create(inputStream, true, null)
+		}
+
+		private fun generateJavaSource(outputPackage: IPackageFragment, fileName: String, sourceContent: String) {
+			val compilationUnit = outputPackage.createCompilationUnit(fileName, sourceContent, true, null)
 
 			this.format(compilationUnit)
 		}
