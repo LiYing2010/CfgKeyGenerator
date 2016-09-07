@@ -2,7 +2,7 @@
 <feature
       id="net.liying.CfgKeyGenerator"
       label="CfgKey Generator"
-      version="1.0.0.qualifier"
+      version="1.1.0.qualifier"
       provider-name="Li Ying">
 
    <description url="https://github.com/LiYing2010/CfgKeyGenerator">
